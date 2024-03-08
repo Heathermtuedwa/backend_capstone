@@ -60,12 +60,7 @@ const deleteProduct = async(productsId)=>{
 //     `,[productname,ProductsId])
 // }
 
-const adduser = async(username,password)=>{
-    await pool.query(`
-      INSERT INTO users(username,password)
-      VALUES (?,?)
-    `,[username,password])
-}
 
 
-export {getProducts,getproduct,updateProduct,deleteProduct,addProduct,adduser}
+
+export {getProducts,getproduct,updateProduct,deleteProduct,addProduct}
