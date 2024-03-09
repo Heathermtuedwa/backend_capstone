@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(204, 185, 161);
+}
+
+.routes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.routes-table caption {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.routes-table th, .routes-table td {
+    border: 1px solid #dddddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.routes-table th {
+    background-color: #f2f2f2;
+}
+
+.routes-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.routes-table tr:hover {
+    background-color: #f2f2f2;
+}

@@ -19,12 +19,12 @@ const adduser = async(username,userPassword,userAge,Gender,userRole,userProfile)
 }
 
 const checkuser = async (username)=>{
-    const [[userPassword]] = await pool.query(`
+    const [[{userPassword}]] = await pool.query(`
       SELECT userPassword FROM User WHERE username = ?
     `,[username])
-    return password
+    return userPassword
 }
-
+console.log(await checkuser('matt'))
 const getusers = async () => {
     const [result] = await pool.query(`SELECT * FROM User`);
     return result;

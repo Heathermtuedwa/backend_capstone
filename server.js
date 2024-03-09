@@ -18,19 +18,36 @@ app.use(cors({
 app.use (cookieParser())
 
 app.use(express.static("./Public"))
+app.use('/user')
+
 
 let PORT = process.env.PORT || 3327
+
+
+const authenticate = (req,res,next)=>{
+    let {cookie} = req.headers
+   let tokenInHeader= cookie && cookie.split('=')[1]
+   if(tokenInHeader===null)res.send(401)
+   jwt.verify(tokenInHeader,process.env.SECERT_Key,
+     (err,User)=>{
+         if(err)return res.sendStatus(403)
+         req.User=User
+     next()
+     })
+ 
+ }
 
 
 const auth =async(req,res,next) =>{
     const {username,userPassword} =  req.body
     const hashedPassword  = await checkuser(username)
-    compare(userPassword,hashedPassword,(err,result)=>{  
-        if(err) throw err 
+    console.log(typeof hashedPassword);
+    bcrypt.compare(userPassword,hashedPassword,(err,result)=>{  
+        // if(err) throw err ;
         if(result === true){
             const {username} = req.body
             const token = jwt.sign({username:username},
-             process.env.SECERT_KEY,{expireIn:'1h'})
+             process.env.SECERT_KEY,{expiresIn:'1h'})
             res.cookie('jwt',token,{httpsOnly:false})
           next()
         }else {
@@ -39,11 +56,13 @@ const auth =async(req,res,next) =>{
     })
 }
  
-app.post('/login',auth,(req,res)=>{
+app.post('/login',auth,(req,res)=>{ 
     res.send({
         msg:'You have logged in successfully!!'
             })
        })
+
+
 app.get('/products',async(req,res)=>{
     res.send(await getProducts())
 })
@@ -74,7 +93,7 @@ app.patch('/products/:id',async(req,res)=>{
     res.json(await getProducts())
 })
 
-app.post('/User',(req,res)=>{
+app.post('/user',(req,res)=>{
     const{username,userPassword,userAge,Gender,userRole,userProfile}=req.body
    bcrypt.hash(userPassword,10,async(err,hashPwd)=>{
         if(err) throw err
@@ -85,7 +104,7 @@ app.post('/User',(req,res)=>{
     })
 })
 
-app.get('/User',async(req,res)=>{
+app.get('/user',async(req,res)=>{
     res.send(await getusers())
 })
 
@@ -93,9 +112,20 @@ app.get('/User',async(req,res)=>{
        res.send(await getuser(+req.params.userID))
   })
 
-  app.delete('/User/:userID',async(req,res)=>{
+  app.delete('/user/:userID',async(req,res)=>{
     res.send(await deleteuser(+req.params.userID))
 })
+
+app.get('/cart/:cartID',async(req,res)=>{
+    res.send(await getcart(+req.params.cartID))
+})
+
+app.post('/cart',async(req,res)=>{
+    const { cartID,productsId,userId,quantity,total} = req.body
+    await addcart( cartID,productsId,userId,quantity,total)
+    res.send(await getcart())
+})
+
 
 
 app.listen(PORT,()=>{
