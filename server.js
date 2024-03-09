@@ -18,7 +18,7 @@ app.use(cors({
 app.use (cookieParser())
 
 app.use(express.static("./Public"))
-app.use('/user')
+
 
 
 let PORT = process.env.PORT || 3327
