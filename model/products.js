@@ -36,12 +36,11 @@ const addProduct= async( Productname, Quantity, Amount,prodURL,description)=>{
     return getProducts(product.insertID)
 }
 
-const updateProduct= async(Productname,prodID)=>{
+const updateProduct= async(Productname, Quantity, Amount,prodURL,description, ProductsId)=>{
     const [product] = await pool.query(`
-       UPDATE Products SET Productname = ? 
-       WHERE (id=?)
-    `,[Productname,prodID])
-    return getProducts(product.insertID)
+       UPDATE Products SET Productname = ? , Quantity = ?, Amount = ?, prodURL = ?, description = ?
+       WHERE ProductsId = ?
+    `,[Productname, Quantity, Amount,prodURL,description, ProductsId])
 }
    
 

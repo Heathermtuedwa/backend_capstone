@@ -84,12 +84,15 @@ app.delete('/products/:productsId',async(req,res)=>{
 
 
 app.patch('/products/:id',async(req,res)=>{
-    let{Productname,productsId}=req.body
-    const [product] = await getproduct(+req.params.productsId)
-    Productname ? Productname=Productname :{Productname} = product
-    productsId ? productsId = productsId: {productId} = productId
+    let{Productname, Quantity, Amount,prodURL,description}=req.body
+    const [product] = await getproduct(+req.params.id)
+    Productname ? Productname : {Productname} = product
+    Quantity ? Quantity : {Quantity} = product
+    Amount ? Amount : {Amount} = product
+    prodURL ? prodURL : {prodURL} = product
+    description ? description : {description} = product
     console.log(product);
-    await updateProduct(Productname,productsId,+req.params.productsId)
+    await updateProduct(Productname, Quantity, Amount, prodURL, description, +req.params.id)
     res.json(await getProducts())
 })
 
