@@ -10,11 +10,11 @@ import bcrypt from 'bcrypt'
 config()
 
 const app = express();
-app.use(express.json());
 app.use(cors({
     origin:'http://localhost:8080',
     credentials:true
 }))
+app.use(express.json());
 app.use (cookieParser())
 
 app.use(express.static("./Public"))
@@ -83,15 +83,14 @@ app.delete('/products/:productsId',async(req,res)=>{
 })
 
 
-app.patch('/products/:id',async(req,res)=>{
+app.patch('/products/:prodID',async(req,res)=>{
     let{Productname, Quantity, Amount,prodURL,description}=req.body
-    const [product] = await getproduct(+req.params.id)
+    const [product] = await getproduct(+req.params.prodID)
     Productname ? Productname : {Productname} = product
     Quantity ? Quantity : {Quantity} = product
     Amount ? Amount : {Amount} = product
     prodURL ? prodURL : {prodURL} = product
     description ? description : {description} = product
-    console.log(product);
     await updateProduct(Productname, Quantity, Amount, prodURL, description, +req.params.id)
     res.json(await getProducts())
 })
