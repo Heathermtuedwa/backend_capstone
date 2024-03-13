@@ -91,7 +91,7 @@ app.patch('/products/:prodID',async(req,res)=>{
     Amount ? Amount : {Amount} = product
     prodURL ? prodURL : {prodURL} = product
     description ? description : {description} = product
-    await updateProduct(Productname, Quantity, Amount, prodURL, description, +req.params.id)
+    await updateProduct(Productname, Quantity, Amount, prodURL, description, +req.params.prodID)
     res.json(await getProducts())
 })
 
