@@ -1,0 +1,85 @@
+import { createStore } from 'vuex'
+import axios from 'axios';
+const base_URL ='https://backend-capstone-amny.onrender.com'
+import sweet from 'sweetalert';
+
+export default createStore({
+  state: {
+    Admin:null,
+    Products:null,
+    Checkout:null,
+    Users:[],
+    singleProduct:null
+  },
+  getters: {},
+  mutations: {
+    setAdmin(state,data){
+      state.Admin = data;
+    },
+    setProducts(state, data){
+      state.Products = data;
+    },
+    setCheckout(state,data){
+      state.Checkout = data;
+    },
+    setUser(state,data){
+      state.Users = data;
+    },
+    setsingleProduct(state,data){
+      state.singleProduct = data
+    }
+  },
+  actions: {
+    async fetchproducts({commit}){
+      try{
+        const data = await axios.get(`${base_URL}/products`);
+        console.log(data);
+        if (data){
+            commit('setProducts',data.data);
+        }
+      }catch(e){
+        sweet({
+          titel:"ERROR",
+          text:"An error has occurred while fetching products",
+          icon:"error",
+          timer:2000,
+        })
+      }
+    },
+  async deleteproduct({commit},productsId){
+      await axios.delete(`${base_URL}/products/${productsId}`);
+      window.location.reload()
+    },
+    async addproduct({commit},productsId){
+      await axios.post(`${base_URL}/products/${productsId}`)
+      window.location.reload()
+      //reloads the page 
+    },
+    async editproduct({commit},products){
+      console.log("ohk");
+      
+      await axios.patch(`${base_URL}/products/${products.ProductsId}`, products)
+      // await dispatch(fetchproducts)
+      // console.log(update)
+      window.location.reload()
+    },
+    async fetchUsers ({commit}){
+      let{data} = await axios.get(`${base_URL}/user`)
+      console.log(data)
+      commit('setUser',data)
+    },
+     async fetchproduct({commit},productsId){
+      console.log('This is inside the fetch:'+productsId);
+      let {data} =  await axios.get(`${base_URL}/products/`+productsId)
+      console.log(data)
+      commit('setsingleProduct',data)
+     }
+
+
+      },
+   
+    
+    modules: {
+    }
+  })
+  
