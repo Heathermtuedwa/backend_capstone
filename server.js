@@ -39,7 +39,7 @@ const authenticate = (req,res,next)=>{
 
 
 const auth =async(req,res,next) =>{
-    const {username,userPassword} =  req.body
+    const {username,userAge, Gender, userPassword, userRole, userProfile} =  req.body
     const hashedPassword  = await checkuser(username)
     console.log(typeof hashedPassword);
     bcrypt.compare(userPassword,hashedPassword,(err,result)=>{  
