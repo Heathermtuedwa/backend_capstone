@@ -1,7 +1,9 @@
 import { createStore } from 'vuex'
 import axios from 'axios';
 const base_URL ='https://backend-capstone-amny.onrender.com'
+// import router from '@router'
 import sweet from 'sweetalert';
+axios.defaults.withCredentials = true
 
 export default createStore({
   state: {
@@ -9,7 +11,8 @@ export default createStore({
     Products:null,
     Checkout:null,
     Users:[],
-    singleProduct:null
+    singleProduct:null,
+    loggedIn:false
   },
   getters: {},
   mutations: {
@@ -27,6 +30,9 @@ export default createStore({
     },
     setsingleProduct(state,data){
       state.singleProduct = data
+    },
+    setLogged(state,data){
+      state.loggedIn = data
     }
   },
   actions: {
@@ -73,8 +79,23 @@ export default createStore({
       let {data} =  await axios.get(`${base_URL}/products/`+productsId)
       console.log(data)
       commit('setsingleProduct',data)
-     }
-
+     },
+    async registerUser ({commit},newUser){
+      console.log(newUser);
+      let{data} = await axios.post(`${base_URL}/user`,newUser)
+      alert(data.msg)
+      window.location.reload()
+     },
+     async loginUser ({commit},currentUser){
+      let{data} = await axios.post(`${base_URL}/login`,currentUser)
+      console.log(currentUser);
+     $cookie.set('jwt',data.token)
+     alert(data.msg)
+     commit('setLogged',true)
+     await router.push('/')
+      window.location.reload()    
+    }
+     
 
       },
    

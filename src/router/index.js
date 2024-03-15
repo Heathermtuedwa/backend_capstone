@@ -6,7 +6,9 @@ import loginView from '../views/loginView.vue';
 import AdminView from '../views/AdminView.vue';
 import ContactView from '../views/ContactView.vue';
 import userView from '../views/userview.vue';
-import singleProductView from '../views/singleProductView.vue'
+import singleProductView from '../views/singleProductView.vue';
+import SignupView from '../views/SignupView.vue';
+
 
 const routes = [
   {
@@ -54,9 +56,14 @@ const routes = [
     path:'/Products/:ProductsId',
     name:'singleProduct',
     component:singleProductView
-  }
+  },
+  {
+    path:'/SignUp',
+    name:'SignUp',
+    component:SignupView
+  },
 ]
-
+  
 const router = createRouter({
   history: createWebHashHistory(),
   routes
