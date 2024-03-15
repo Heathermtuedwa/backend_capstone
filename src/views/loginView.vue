@@ -22,11 +22,7 @@ export default {
     data(){
         return{
             username: '',
-            userAge : '',
-            Gender: '',
             userPassword: '',
-            userRole : '',
-            userProfile: ''
         }
     },
     methods:{
