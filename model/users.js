@@ -1,5 +1,7 @@
 import mysql from 'mysql2';
 import{config}from 'dotenv';
+import bcrypt  from 'bcrypt';
+
 
 config()
 
@@ -18,13 +20,29 @@ const adduser = async(username,userPassword,userAge,Gender,userRole,userProfile)
     `,[username,userPassword,userAge,Gender,userRole,userProfile])
 }
 
-const checkuser = async (username)=>{
-    const [[{userPassword}]] = await pool.query(`
+const checkuser = async (username, password)=>{
+    let [[{userPassword}]] = await pool.query(`
       SELECT userPassword FROM User WHERE username = ?
     `,[username])
-    return userPassword
+    if (userPassword) {
+        bcrypt.compareSync(password, userPassword, (err, result) => {
+            if (err) {
+            // Handle error
+            console.error('Error comparing passwords:', err);
+            return
+            }
+        
+            // Result will be true if the passwords match, false otherwise
+            if (result) {
+            console.log('Passwords match!');
+            return 
+            }
+            return;
+        });
+    }
+    return userPassword;
 }
-console.log(await checkuser('matt'))
+// console.log(await checkuser('matt'))
 const getusers = async () => {
     const [result] = await pool.query(`SELECT * FROM User`);
     return result;

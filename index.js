@@ -1,11 +1,11 @@
 import express from 'express';
 import {config}from 'dotenv';
 import {getProducts,getproduct,updateProduct,deleteProduct,addProduct} from './model/products.js';
-import {adduser,checkuser,getusers,getuser,deleteuser}from './model/users.js'
+import {adduser,checkuser,getuser,deleteuser,getusers}from './model/users.js'
 import cookieParser from "cookie-parser";
-import jwt from 'jsonwebtoken';
-import cors from 'cors'
+import cors from 'cors';
 import bcrypt from 'bcrypt'
+import {auth} from './middleware/middle.js'
 
 config()
 
@@ -24,39 +24,20 @@ app.use(express.static("./Public"))
 let PORT = process.env.PORT || 3327
 
 
-const authenticate = (req,res,next)=>{
-    let {cookie} = req.headers
-   let tokenInHeader= cookie && cookie.split('=')[1]
-   if(tokenInHeader===null)res.send(401)
-   jwt.verify(tokenInHeader,process.env.SECERT_Key,
-     (err,User)=>{
-         if(err)return res.sendStatus(403)
-         req.User=User
-     next()
-     })
- 
- }
-
-
-const auth =async(req,res,next) =>{
-    const {username,userAge, Gender, userPassword, userRole, userProfile} =  req.body
-    const hashedPassword  = await checkuser(username)
-    console.log(typeof hashedPassword);
-    bcrypt.compare(userPassword,hashedPassword,(err,result)=>{  
-        // if(err) throw err ;
-        if(result === true){
-            const {username} = req.body
-            const token = jwt.sign({username:username},
-             process.env.SECERT_KEY,{expiresIn:'1h'})
-            res.cookie('jwt',token,{httpsOnly:false})
-          next()
-        }else {
-            res.send ({msg:'The username or password is incorrect'})
-        }
+app.post('/user',(req,res)=>{
+    const{username,userPassword,userAge,Gender,userRole,userProfile}=req.body
+   bcrypt.hash(userPassword,10,async(err,hashPwd)=>{
+        if(err) throw err
+        await adduser(username,hashPwd,userAge,Gender,userRole,userProfile)
     })
-}
+    res.send({
+        msg:"You have successfully created an account"
+    })
+})
  
-app.post('/login',auth,(req,res)=>{ 
+app.post('/login',auth, async(req,res)=>{
+    const{username,userPassword}=req.body
+     const isLoggedIn = await checkuser(username,userPassword)
     res.send({
         msg:'You have logged in successfully!!'
             })
@@ -95,16 +76,6 @@ app.patch('/products/:prodID',async(req,res)=>{
     res.json(await getProducts())
 })
 
-app.post('/user',(req,res)=>{
-    const{username,userPassword,userAge,Gender,userRole,userProfile}=req.body
-   bcrypt.hash(userPassword,10,async(err,hashPwd)=>{
-        if(err) throw err
-        await adduser(username,hashPwd,userAge,Gender,userRole,userProfile)
-    })
-    res.send({
-        msg:"You have successfully created an account"
-    })
-})
 
 app.get('/user',async(req,res)=>{
     res.send(await getusers())
@@ -118,15 +89,15 @@ app.get('/user',async(req,res)=>{
     res.send(await deleteuser(+req.params.userID))
 })
 
-app.get('/cart/:cartID',async(req,res)=>{
-    res.send(await getcart(+req.params.cartID))
-})
+// app.get('/cart/:cartID',async(req,res)=>{
+//     res.send(await getcart(+req.params.cartID))
+// })
 
-app.post('/cart',async(req,res)=>{
-    const { cartID,productsId,userId,quantity,total} = req.body
-    await addcart( cartID,productsId,userId,quantity,total)
-    res.send(await getcart())
-})
+// app.post('/cart',async(req,res)=>{
+//     const { cartID,productsId,userId,quantity,total} = req.body
+//     await addcart( cartID,productsId,userId,quantity,total)
+//     res.send(await getcart())
+// })
 
 
 
