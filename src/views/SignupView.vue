@@ -3,31 +3,31 @@
         <div class="card">
             <a class="singup">Sign Up</a>
             <div class="inputBox1">
-                <input type="text" required="required">
+                <input type="text" required="required" v-model="userEmail">
                 <span class="user">Email</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" required="required">
+                <input type="text" required="required" v-model="username">   
                 <span>Username</span>
             </div>
 
             <div class="inputBox">
-                <input type="password" required="required">
+                <input type="password" required="required" v-model="userPassword">
                 <span>Password</span>
             </div>
             <div class="inputBox">
-                <input type="text" required="required">
+                <input type="text" required="required" v-model="Gender">
                 <span>Gender</span>
             </div>
 
             <div class="inputBox">
-                <input type="number" required="required">
+                <input type="number" required="required" v-model="Age">
                 <span>Age</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" required="required">
+                <input type="text" required="required" v-model="Role">
                 <span>Role</span>
             </div>
 
@@ -42,8 +42,15 @@
 export default {
     data(){
         return{
-            username:null,
-            userAge:null,
+            username:'',
+            Age:'',
+            userPassword:'',
+            Gender:'',
+            Role:'',
+            Email:''
+
+
+
         }
     },
      computed:{

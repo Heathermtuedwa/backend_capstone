@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios';
-const base_URL ='https://backend-capstone-amny.onrender.com'
+// const base_URL ='https://backend-capstone-amny.onrender.com'
+const base_URL ='http://localhost:3307'
 import router from '@/router'
 import cookies from "vue-cookies"
 import sweet from 'sweetalert';
@@ -86,16 +87,16 @@ export default createStore({
       console.log(newUser);
       let{data} = await axios.post(`${base_URL}/user`,newUser)
       alert(data.msg)
-      window.location.reload()
+      // window.location.reload()
      },
      async loginUser ({commit},currentUser){
+       console.log(currentUser);
       let{data} = await axios.post(`${base_URL}/login`,currentUser)
-      console.log(currentUser);
-     $cookies.set('jwt',data.token)
+     cookies.set('jwt',data.token)
      alert(data.msg)
      commit('setLogged',true)
      await router.push('/')
-      window.location.reload()    
+      // window.location.reload()    
     }
      
 

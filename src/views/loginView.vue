@@ -26,11 +26,9 @@ export default {
         }
     },
     methods:{
-        loginUser(){
-
-            // this.$store.dispatch('loginUser',this.$data)
-            console.log(this.$store.dispatch('loginUser',this.$data));
-        }
+      async loginUser() {
+    console.log(await this.$store.dispatch('loginUser', this.$data));
+}
     }
     
 }
