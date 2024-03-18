@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-export default {
+export default {  
     data(){
         return{
             username: '',
@@ -26,12 +26,15 @@ export default {
         }
     },
     methods:{
-      async loginUser() {
-    console.log(await this.$store.dispatch('loginUser', this.$data));
+    //   async loginUser() {
+    // console.log(await this.$store.dispatch('loginUser', this.$data));
+     loginUser(){
+      this.$store.dispatch('loginUser', this.$data)
+    }
 }
     }
     
-}
+
 </script>
 <style>
 .login {

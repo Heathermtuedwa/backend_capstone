@@ -97,7 +97,15 @@ export default createStore({
      commit('setLogged',true)
      await router.push('/')
       // window.location.reload()    
-    }
+    },
+    async editUser({commit},Users){
+      await axios.patch(`${base_URL}/user/${Users.UserId}`,Users)
+      window.location.reload()
+    },
+    async deleteUser({commit},UserId){
+      await axios.delete(`${base_URL}/user/${UserId}`);
+      window.location.reload()
+    },
      
 
       },

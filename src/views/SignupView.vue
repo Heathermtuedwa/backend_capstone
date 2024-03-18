@@ -22,13 +22,18 @@
             </div>
 
             <div class="inputBox">
-                <input type="number" required="required" v-model="Age">
+                <input type="number" required="required" v-model="userAge">
                 <span>Age</span>
             </div>
 
             <div class="inputBox">
-                <input type="text" required="required" v-model="Role">
+                <input type="text" required="required" v-model="userRole">
                 <span>Role</span>
+            </div>
+              
+            <div class="inputBox">
+                <input type="text" required="required" v-model="Profile">
+                <span>Profile</span>
             </div>
 
             <button @click = "registerUser"  class="enter">Enter</button>
@@ -43,11 +48,12 @@ export default {
     data(){
         return{
             username:'',
-            Age:'',
+            userAge:'',
             userPassword:'',
             Gender:'',
-            Role:'',
-            Email:''
+            userRole:'',
+            Email:'',
+            Profile:''
 
 
 
