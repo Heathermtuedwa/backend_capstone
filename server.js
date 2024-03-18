@@ -36,8 +36,8 @@ app.post('/user',(req,res)=>{
 })
  
 app.post('/login',auth, async(req,res)=>{
-    const{username,userPassword}=req.body
-     const isLoggedIn = await checkuser(username,userPassword)
+    // const{username,userPassword}=req.body
+    //  const isLoggedIn = await checkuser(username,userPassword)
     res.send({
         msg:'You have logged in successfully!!'
             })

@@ -26,6 +26,10 @@ const authenticate = (req,res,next)=>{
             const token = jwt.sign({username:username},
              process.env.SECERT_KEY,{expiresIn:'1h'})
             res.cookie('jwt',token,{httpsOnly:false})
+            res.send({
+                token:token,
+                msg:'You have logged in successfully!!'
+            })
           next()
         }else {
             res.send ({msg:'The username or password is incorrect'})
