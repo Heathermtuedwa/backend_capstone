@@ -61,10 +61,18 @@ const deleteuser = async(userID)=>{
     `,[userID])
 }
 
+const updateuser= async(username,userAge,Gender,userRole,userProfile,userID)=>{
+    const [User] = await pool.query(`
+       UPDATE User SET username = ? , userAge = ?, Gender = ?, userRole = ?, userProfile = ?
+       WHERE userID = ?
+    `,[username,userAge,Gender,userRole,userProfile,userID])
+    return User
+}
 
 
 
 
 
 
-export {adduser,checkuser,getusers,getuser,deleteuser}  
+
+export {adduser,checkuser,getusers,getuser,deleteuser,updateuser}  

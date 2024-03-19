@@ -1,7 +1,7 @@
 import express from 'express';
 import {config}from 'dotenv';
 import {getProducts,getproduct,updateProduct,deleteProduct,addProduct} from './model/products.js';
-import {adduser,checkuser,getuser,deleteuser,getusers}from './model/users.js'
+import {adduser,checkuser,getuser,deleteuser,getusers,updateuser}from './model/users.js'
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import bcrypt from 'bcrypt'
@@ -65,8 +65,8 @@ app.delete('/products/:productsId',async(req,res)=>{
 
 
 app.patch('/products/:prodID',async(req,res)=>{
-    let{Productname, Quantity, Amount,prodURL,description}=req.body
     const [product] = await getproduct(+req.params.prodID)
+    let{Productname, Quantity, Amount,prodURL,description}=req.body
     Productname ? Productname : {Productname} = product
     Quantity ? Quantity : {Quantity} = product
     Amount ? Amount : {Amount} = product
@@ -87,6 +87,18 @@ app.get('/user',async(req,res)=>{
 
   app.delete('/user/:userID',async(req,res)=>{
     res.send(await deleteuser(+req.params.userID))
+})
+
+app.patch('/user/:userID',async(req,res)=>{
+    let{username,userAge,Gender,userRole,userProfile}=req.body
+    const [User] = await getuser(+req.params.userID)
+    username ? username : {username} = User
+    userAge ? userAge : {userAge} = User
+    Gender ? Gender : {Gender} = User
+    userRole ? userRole : {userRole} = User
+    userProfile ? userProfile : {userProfile} = User
+    await updateuser(username,userAge,Gender,userRole,userProfile, +req.params.userID)
+    res.json(await getusers())
 })
 
 // app.get('/cart/:cartID',async(req,res)=>{
