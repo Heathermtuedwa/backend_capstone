@@ -4,8 +4,9 @@ import {getProducts,getproduct,updateProduct,deleteProduct,addProduct} from './m
 import {adduser,checkuser,getuser,deleteuser,getusers,updateuser}from './model/users.js'
 import cookieParser from "cookie-parser";
 import cors from 'cors';
-import bcrypt from 'bcrypt'
-import {auth} from './middleware/middle.js'
+import bcrypt from 'bcrypt';
+import {auth} from './middleware/middle.js';
+// import { deleteCart, editCart, postToCart,getAllOrders, getCartbyUser} from './model/cart.js';
 
 config()
 
@@ -101,10 +102,15 @@ app.patch('/user/:userID',async(req,res)=>{
     res.json(await getusers())
 })
 
-// app.get('/cart/:cartID',async(req,res)=>{
-//     res.send(await getcart(+req.params.cartID))
-// })
+app.post('/addToCart', async (req, res) => {
+    const { userID, productsID } = req.body; // Corrected object destructuring
+    await addToCart(userID, productsID);
+    res.send({
+        msg: "Item successfully added to the cart"
+    });
+});
 
+//   
 // app.post('/cart',async(req,res)=>{
 //     const { cartID,productsId,userId,quantity,total} = req.body
 //     await addcart( cartID,productsId,userId,quantity,total)
