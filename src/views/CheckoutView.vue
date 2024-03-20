@@ -14,15 +14,15 @@
             <tr v-for="cart in $store.state.Checkout" :key="product.ProductsId">
                 <td>
                     <img :src="product.prodUrl" alt="Product Image" style="width: 50px; height: 50px;">
-                    <span>{{ product.productName }}</span>
+                    <span>{{ product.Productname }}</span>
                 </td>
                 <td>
-                    <input type="number" v-model="product.quantity" min="1">
+                    <input type="number" v-model="product.Quantity" min="1">
                 </td>
-                <td>R{{ product.price }}</td>
-                <td>R{{ product.quantity * product.price }}</td>
+                <td>R{{ product.Amount }}</td>
+                <td>R{{ product.Quantity * product.price }}</td>
                 <td>
-                    <button @click="removeFromCart(product.productsId)">Remove</button>
+                    <button @click="removeFromCart(product.ProductsId)">Remove</button>
                 </td>
             </tr>
         </tbody>
@@ -40,34 +40,31 @@
 export default {
   data() {
     return {
-      Product: { 
-        Productname: '',
-        Amount: '',
+      product: { 
+        ProductsId: '',
+        userId: '',
         Quantity:'',
-        description: ''
+        Amount: ''
       }
     };
   },
   methods:{
      
-    addtoCart(ProductsId){
-       this.$store.dispatch('addtoCart',ProductsId);
+    // addtoCart(ProductsId){
+    //    this.$store.dispatch('addtoCart',ProductsId);
      },
  
-  computed:{
-        fetchproducts(){
-
-            this.$store.dispatch('fetchproducts')
-        }
-    },
-    mounted(){
-      
-        this.fetchproducts
-
-    },
+     computed:{
+      fetchCart(){
+        this.$store.dispatch('fetchCart',this.$route.params.ProductsId)
+    }
+   },
+   mounted(){
+    this.fetchcart
+   }
 
    }
-}
+
 </script>
 <style >
  .cart-table {

@@ -179,7 +179,6 @@ export default createStore({
           });
       }
   },
-  
     async editUser({commit},Users){
       // await axios.patch(`${base_URL}/user/${Users.UserId}`,Users)
       await axios.patch(base_URL +`/user/${Users.userID}`,Users)
@@ -247,9 +246,20 @@ export default createStore({
         button: "OK",
       });
     }
+  },
+  async fetchCart({ commit }, productsId) {
+    try {
+      console.log('This is inside the fetch:', productsId);
+      const { data } = await axios.get(`${base_URL}/cart/${productsId}`);
+      console.log(data);
+      commit('setCheckout', data);
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+      // Handle error as needed
+    }
   }
+},
 
-   },
    
     
     modules: {
