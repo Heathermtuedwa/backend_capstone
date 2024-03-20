@@ -16,9 +16,20 @@ const addcart = async(cartID,productsId,userId,quantity,total)=>{
      VALUES (?,?,?,?,?);
     `,[cartID,productsId,userId,quantity,total])
 }
-const getcart = async () => {
-    const [result] = await pool.query(`SELECT * FROM cart`);
-    return result;
+const getcarts=async()=>{
+    const[result]=await pool.query(`
+        SELECT * 
+        FROM cart
+    `)
+    return result
+}
+const getcart = async(cartID)=>{
+    const[result] = await pool.query(`
+      SELECT * 
+      FROM cart
+      WHERE cartID = ?
+    `,[cartID])
+    return result 
 }
 const updateCart = async (quantity, userID, prodID) => {
     // Insert item into cart
@@ -78,4 +89,4 @@ const removeCartItem = async (req, res)=>{
 // }
 
 
-export {addcart,getcart,updateCart,removeCartItem}
+export {addcart,getcart,updateCart,removeCartItem,getcarts}
