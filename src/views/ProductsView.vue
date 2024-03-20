@@ -12,7 +12,7 @@
       </div>
       <p><span>R{{ product.Amount }}</span></p>
       <div class="product-price-btn">
-        <button type="button">Add</button>
+        <button type="button" @click ="addtoCart(product.ProductsId)">Add</button>
         <router-link :to="{ name:'singleProduct', params: {ProductsId: product.ProductsId}}">View More</router-link>
       </div>
     </div>
@@ -30,6 +30,10 @@ export default {
     //   console.log(productsId);
       // this.$store.dispatch('fetchproduct',productsId)
   //  }
+  addtoCart(ProductsId){
+       this.$store.dispatch('addtoCart',ProductsId);
+     },
+ 
   },
     computed:{
         fetchproducts(){
@@ -41,7 +45,9 @@ export default {
       
         this.fetchproducts
 
-    }
+    },
+
+    
     
 }
 </script>
