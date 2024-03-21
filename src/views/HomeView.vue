@@ -18,7 +18,7 @@ body {
 }
 
 #main {
-	background: linear-gradient(to bottom, rgba(0,0,0,0.66) 10%, transparent), url(https://i.ibb.co/8KN1VBK/0d24d97c631db4d27e66c0fa2e9c6f45.jpg);
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.66) 0%, transparent), url(https://i.ibb.co/zhPZ0dP/5bdbfa5d-2e97-4f84-9a09-bcde5ef9a22c.webp);
 	background-size:cover,80%;
 	background-position: center, center;
     height: 100vh;

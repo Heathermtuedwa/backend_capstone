@@ -1,4 +1,5 @@
 <template >
+    <nav>
 <div class="dropdown" v-show="!userRole">
     <img src="https://cdn-thumbs.imagevenue.com/1c/ff/22/ME17RQHY_t.png" alt="User" class="user-icon dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="tooltip">User</span>
@@ -20,9 +21,7 @@
         </router-link>
       </li>
     </ul>
-  </div>
-
-    <nav >
+   
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>|
     <router-link to="/Products">Products</router-link>|
@@ -30,8 +29,11 @@
     <router-link to="/Admin">Admin</router-link>|
       <router-link to="/user">Users</router-link>|
     <router-link to="/Contact">Contact</router-link>|
+    
+ </div>
 
   </nav>
+
 </template>
 <script>
 export default {
@@ -40,10 +42,11 @@ export default {
 </script>
 <style scoped>
 nav {
-  padding: 40px 0;
+  padding:20px 0;
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  /* position: absolute; */
+  background-color: #353c41;
+  /* position: fixed; */
  
 
 }
@@ -61,13 +64,16 @@ nav a{
   text-decoration:none;
   padding:30px;
   color: rgb(48, 35, 35);
+  transition: text-decoration 0.3s ease;
  
 }
 
 nav a:hover {
-  color:dark grey; 
+  /* color:dark grey; 
   background-color:rgb(116, 111, 111);
-  border-radius: 30px;
+  border-radius: 30px; */
+  text-decoration: underline;
+   
   
 }
 
@@ -98,7 +104,7 @@ nav a:hover {
 .dropdown-menu {
   display: none;
   position: absolute;
-  background-color: #9b4a4a;
+  background-color: #635858;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -115,16 +121,19 @@ nav a:hover {
 }
 
 .dropdown-menu a:hover {
-  background-color: #643b3b;
+  background-color: #554949;
 }
 
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
   display: block;
-}
+} */
+
 .user-icon {
-  width: 20px; /* Adjust size as needed */
-  height: auto; /* Maintain aspect ratio */
+  width: 30px;
+  height: auto; 
+  /* background-color: #3f4a51  //Maintain aspect ratio */
 }
+
 
  
 </style>

@@ -1,11 +1,11 @@
 <template>
   
   <NavbarComp/>
- <SpinnerComp/>
- <router-view/>
+  <SpinnerComp/>
   <FooterComp/>
- 
- </template>
+  
+<router-view/>
+</template>
  
  
  

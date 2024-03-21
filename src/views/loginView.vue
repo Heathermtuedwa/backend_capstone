@@ -36,7 +36,9 @@ export default {
     
 
 </script>
-<style>
+<style scoped>
+
+
 .login {
   color: #000;
   text-transform: uppercase;
@@ -50,14 +52,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 350px;
-  width: 300px;
+  min-height: 450px;
+  width: 700px;
   flex-direction: column;
   gap: 35px;
   background: #e3e3e3;
   box-shadow: 16px 16px 32px #c8c8c8,
         -16px -16px 32px #fefefe;
   border-radius: 8px;
+  margin: 0 auto; /* Center horizontally */
+  margin-top: 50px; /* Adjust top margin as needed */
 }
 
 .inputBox {
