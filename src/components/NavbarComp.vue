@@ -69,10 +69,10 @@ nav a{
 }
 
 nav a:hover {
-  /* color:dark grey; 
+  color:dark grey; 
   background-color:rgb(116, 111, 111);
-  border-radius: 30px; */
-  text-decoration: underline;
+  border-radius: 30px;
+  /* text-decoration: underline; */
    
   
 }
