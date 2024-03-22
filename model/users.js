@@ -69,10 +69,17 @@ const updateuser= async(username,userAge,Gender,userRole,userProfile,userID)=>{
     return User
 }
 
+const getuserEmail = async (username) => {
+    const [result] = await pool.query (`SELECT * FROM User WHERE username = ?`, [ username])
+    return result 
+}
+// console.log (await getuserEmail('Tauha'))
 
 
 
 
 
 
-export {adduser,checkuser,getusers,getuser,deleteuser,updateuser}  
+
+
+export {adduser,checkuser,getusers,getuser,deleteuser,updateuser,getuserEmail}  

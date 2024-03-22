@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import {auth} from './middleware/middle.js';
-import {  addcart,getcart,getcarts} from './model/cart.js';
+import {  addcart,getcart, cart,addedInCart} from './model/cart.js';
 
 config()
 
@@ -104,19 +104,25 @@ app.patch('/user/:userID',async(req,res)=>{
 
 app.post('/addToCart', async (req, res) => {
     const { userID, productsID } = req.body; // Corrected object destructuring
-    await addcart(userID, productsID);
+    await addedIncart(userID, productsID);
     res.send({
         msg: "Item successfully added to the cart"
     });
 });
 
-app.get('/cart',async(req,res)=>{
-    res.send(await getcarts())
-})
+app.get('/cart', async (req, res) => {
+    try {
+      const results = await cart();
+      res.json(results);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+  });
 
 app.get('/cart/:prodID',async(req,res)=>{
     res.send(await getcart(+req.params.prodID))
 })
+
 //   
 // app.post('/cart',async(req,res)=>{
 //     const { cartID,productsId,userId,quantity,total} = req.body
