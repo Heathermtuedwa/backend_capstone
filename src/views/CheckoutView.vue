@@ -11,18 +11,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="cart in $store.state.Checkout" :key="product.ProductsId">
+            <tr v-for="cart in $store.state.cart" :key="cart.cartID">
                 <td>
-                    <img :src="product.prodUrl" alt="Product Image" style="width: 50px; height: 50px;">
-                    <span>{{ product.Productname }}</span>
+                    <img :src="cart.userId" alt="Product Image" style="width: 50px; height: 50px;">
+                    <span>{{ cart.productsId }}</span>
                 </td>
                 <td>
-                    <input type="number" v-model="product.Quantity" min="1">
+                    <input type="number" v-model="cart.Quantity" min="1">
                 </td>
-                <td>R{{ product.Amount }}</td>
-                <td>R{{ product.Quantity * product.price }}</td>
+                <td>R{{ cart.total }}</td>
+                <td>R{{ cart.quantity * cart.total }}</td>
                 <td>
-                    <button @click="removeFromCart(product.ProductsId)">Remove</button>
+                    <button @click="removeFromCart(cart.userId)">Remove</button>
                 </td>
             </tr>
         </tbody>
@@ -38,32 +38,22 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      product: { 
-        ProductsId: '',
-        userId: '',
-        Quantity:'',
-        Amount: ''
-      }
-    };
-  },
-  methods:{
-     
-    // addtoCart(ProductsId){
-    //    this.$store.dispatch('addtoCart',ProductsId);
-     },
  
-     computed:{
-      fetchCart(){
-        this.$store.dispatch('fetchCart',this.$route.params.ProductsId)
-    }
+      computed: {
+    getCart() {
+      return this.$store.state.Checkout;
+    },
+    user() {
+      return this.$store.state.Users;
+    },
    },
    mounted(){
-    this.fetchcart
+      
+      this.getCart
+
+  },
    }
 
-   }
 
 </script>
 <style >

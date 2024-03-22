@@ -10,11 +10,11 @@ axios.defaults.withCredentials = true
 
 export default createStore({
   state: {
-    Admin:null,
-    Products:null,
-    Checkout:null,
+    Admin:[],
+    Products:[],
+    Checkout:[],
     Users:[],
-    singleProduct:null,
+    singleProduct:[],
     loggedIn:false
   },
   getters: {},
@@ -121,34 +121,34 @@ export default createStore({
      },
      async registerUser({ commit }, newUser) {
       try {
-          console.log(newUser);
-          let { data } = await axios.post(`${base_URL}/user`, newUser);
-  
-          // Show success message using SweetAlert
-          Swal.fire({
-              icon: 'success',
-              title: 'Registration Successful',
-              text: data.msg,
-              showConfirmButton: false,
-              timer: 1500 // Automatically close the alert after 1.5 seconds
-          });
-  
-          // Optionally, you can commit mutations or perform other actions here
-  
-          // You may want to redirect the user to another page after successful registration
-          // await router.push('/login');
+        console.log(newUser);
+        let { data } = await axios.post(`${base_URL}/user`, newUser);
+    
+        // Show success message using SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful',
+          text: data.msg,
+          showConfirmButton: false,
+          timer: 1500 // Automatically close the alert after 1.5 seconds
+        });
+    
+        // Optionally, you can commit mutations or perform other actions here
+    
+        // You may want to redirect the user to another page after successful registration
+        // await router.push('/login');
       } catch (error) {
-          console.error('Error registering user:', error);
-  
-          // Show error message using SweetAlert
-          Swal.fire({
-              icon: 'error',
-              title: 'Registration Failed',
-              text: 'Failed to register user. Please try again later.',
-          });
+        console.error('Error registering user:', error);
+    
+        // Show error message using SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: 'Failed to register user. Please try again later.',
+        });
       }
-  },  
-     async loginUser({ commit }, currentUser) {
+    },
+    async loginUser({ commit }, currentUser) {
       try {
           console.log(currentUser);
           let { data } = await axios.post(`${base_URL}/login`, currentUser);
@@ -226,43 +226,44 @@ export default createStore({
           });
       }
   },
-  async addtoCart({ commit }, productsId) {
-    try {
-      const response = await axios.post(`${base_URL}/addToCart`, { productsId });
-      // Display a SweetAlert confirmation
-      swal({
-        title: "Product Added to Cart!",
-        text: "Your selected product has been added to the cart.",
-        icon: "success",
-        button: "OK",
-      });
-    } catch (error) {
-      // Handle errors appropriately
-      console.error("Error adding product to cart:", error);
-      swal({
-        title: "Error",
-        text: "There was an error adding the product to the cart",
-        icon: "error",
-        button: "OK",
-      });
-    }
+  async getCart({commit}, id) {
+    const res = await axios.get(`${base_URL}user/${id}/cart`);
+    commit("setCart", res.data);
+    console.log(id);
   },
-  async fetchCart({ commit }, productsId) {
+  async addToCart({ commit }, userId, productsId) {
+    console.log("hello")
     try {
-      console.log('This is inside the fetch:', productsId);
-      const { data } = await axios.get(`${base_URL}/cart/${productsId}`);
-      console.log(data);
-      commit('setCheckout', data);
+      await axios.post(`${base_URL}user/${userId}/cart`, {
+        userId,
+        productsId,
+      });
+  
+      commit("addProductToCart", productsId,userId); 
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Product added to cart successfully.',
+      });
+  
+      window.location.reload(); // Reloads the page after adding the product to cart
     } catch (error) {
-      console.error('Error fetching cart:', error);
-      // Handle error as needed
+      console.error('Error adding product to cart:', error);
+  
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'An error occurred while adding the product to the cart.',
+      });
     }
-  }
-},
-
-   
+    },
+     
+  },  
     
+
     modules: {
     }
-  })
-  
+
+   })
+ 

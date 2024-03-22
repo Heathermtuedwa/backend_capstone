@@ -18,9 +18,9 @@
                     action="https://formspree.io/f/xgeglpep"
                      method="POST"
                     >
-                        <input type="text" name="name" placeholder=" your name">
-                        <input type="email" name="email" placeholder="your email">
-                        <input type="tel" name="phone" placeholder="your phone">
+                        <input type="text" name="name" placeholder=" your name" required>
+                        <input type="email" name="email" placeholder="your email" required>
+                        <input type="tel" name="phone" placeholder="your phone"required>
                         <!-- <input type="url" name="website" placeholder="your website"> -->
                         <input type="text" name="subject" placeholder="subject">
                         <textarea placeholder="your message"></textarea>
